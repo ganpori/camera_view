@@ -1,3 +1,6 @@
+https://github.com/ml-flaskbook/flaskbook.gitの内容をもとにweb上で定期的撮影したカメラ画像を表示できるようにする
+
+
 # Python Flask による Web アプリ開発入門
 ## Git Clone
 
