@@ -330,13 +330,13 @@ SQLAlchemy = ">=0.8.0"
 
 [[package]]
 name = "flask-wtf"
-version = "1.0.0"
+version = "1.1.1"
 description = "Form rendering, validation, and CSRF protection for Flask with WTForms."
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 files = [
-    {file = "Flask-WTF-1.0.0.tar.gz", hash = "sha256:872fbb17b5888bfc734edbdcf45bc08fb365ca39f69d25dc752465a455517b28"},
-    {file = "Flask_WTF-1.0.0-py3-none-any.whl", hash = "sha256:01feccfc395405cea48a3f36c23f0d766e2cc6fd2a5a065ad50ad3e5827ec797"},
+    {file = "Flask-WTF-1.1.1.tar.gz", hash = "sha256:41c4244e9ae626d63bed42ae4785b90667b885b1535d5a4095e1f63060d12aa9"},
+    {file = "Flask_WTF-1.1.1-py3-none-any.whl", hash = "sha256:7887d6f1ebb3e17bf648647422f0944c9a469d0fcf63e3b66fb9a83037e38b2c"},
 ]
 
 [package.dependencies]
@@ -930,4 +930,4 @@ email = ["email-validator"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "9e9e0e92c9713ce0003bb7fff025c141418c83b36b653fae6a5e89d6df32788a"
+content-hash = "51f9707b20ec718edf4e73d0ef50436bbbf6bd61ed66d672184e9c7ec423ed4e"
