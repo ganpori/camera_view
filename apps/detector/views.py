@@ -147,9 +147,10 @@ def exec_detect(target_image_path):
 
     # 画像の読み込み
     image = Image.open(target_image_path)
+    image_rgb = image.convert("RGB")  # 普段使ってる画像は４要素。なんか３要素しか対応してないモデルっぽいのでとりあえず変換しとく
 
     # 画像データをテンソル型の数値データへ変換
-    image_tensor = torchvision.transforms.functional.to_tensor(image)
+    image_tensor = torchvision.transforms.functional.to_tensor(image_rgb)
 
     # 学習済みモデルの読み込み
     model = torch.load(Path(current_app.root_path, "detector", "model.pt"))
