@@ -121,7 +121,7 @@ def draw_lines(c1, c2, result_image, line, color):
     return cv2
 
 
-def draw_texts(result_image, line, c1, cv2, color, labels, label):
+def draw_texts(result_image, line, c1, color, labels, label):
     # 検知したテキストラベルを画像に追記
     display_txt = f"{labels[label]}"
     font = max(line - 1, 1)
@@ -178,7 +178,7 @@ def exec_detect(target_image_path):
             # 画像に枠線を追記
             cv2 = draw_lines(c1, c2, result_image, line, color)
             # 画像にテキストラベルを追記
-            cv2 = draw_texts(result_image, line, c1, cv2, color, labels, label)
+            cv2 = draw_texts(result_image, line, c1, color, labels, label)
             tags.append(labels[label])
 
     # 検知後の画像ファイル名を生成する
