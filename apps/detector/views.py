@@ -165,7 +165,8 @@ def exec_detect(target_image_path):
 
     # 学習済みモデルが検知した各物体の分だけ画像に追記
     for box, label, score in zip(output["boxes"], output["labels"], output["scores"]):
-        if score > 0.5 and labels[label] not in tags:
+        # if score > 0.5 and labels[label] not in tags:
+        if labels[label] not in tags:
             print(score)
             print(labels[label])
             # 枠線の色の決定
