@@ -121,7 +121,7 @@ def draw_lines(c1, c2, result_image, line, color):
     return cv2
 
 
-def draw_texts(result_image, line, c1, cv2, color, labels, label):
+def draw_texts(result_image, line, c1, color, labels, label):
     # 検知したテキストラベルを画像に追記
     display_txt = f"{labels[label]}"
     font = max(line - 1, 1)
@@ -147,9 +147,10 @@ def exec_detect(target_image_path):
 
     # 画像の読み込み
     image = Image.open(target_image_path)
+    image_rgb = image.convert("RGB")  # 普段使ってる画像は４要素。なんか３要素しか対応してないモデルっぽいのでとりあえず変換しとく
 
     # 画像データをテンソル型の数値データへ変換
-    image_tensor = torchvision.transforms.functional.to_tensor(image)
+    image_tensor = torchvision.transforms.functional.to_tensor(image_rgb)
 
     # 学習済みモデルの読み込み
     model = torch.load(Path(current_app.root_path, "detector", "model.pt"))
@@ -164,7 +165,8 @@ def exec_detect(target_image_path):
 
     # 学習済みモデルが検知した各物体の分だけ画像に追記
     for box, label, score in zip(output["boxes"], output["labels"], output["scores"]):
-        if score > 0.5 and labels[label] not in tags:
+        # if score > 0.5 and labels[label] not in tags:
+        if labels[label] not in tags:
             print(score)
             print(labels[label])
             # 枠線の色の決定
@@ -175,9 +177,9 @@ def exec_detect(target_image_path):
             c1 = (int(box[0]), int(box[1]))
             c2 = (int(box[2]), int(box[3]))
             # 画像に枠線を追記
-            cv2 = draw_lines(c1, c2, result_image, line, color)
+            draw_lines(c1, c2, result_image, line, color)
             # 画像にテキストラベルを追記
-            cv2 = draw_texts(result_image, line, c1, cv2, color, labels, label)
+            draw_texts(result_image, line, c1, color, labels, label)
             tags.append(labels[label])
 
     # 検知後の画像ファイル名を生成する
@@ -188,7 +190,8 @@ def exec_detect(target_image_path):
         Path(current_app.config["UPLOAD_FOLDER"], detected_image_file_name)
     )
     # 変換後の画像ファイルを保存先へコピーする
-    cv2.imwrite(detected_image_file_path, cv2.cvtColor(result_image, cv2.COLOR_RGB2BGR))
+    save_img = cv2.cvtColor(result_image, cv2.COLOR_RGB2BGR)
+    cv2.imwrite(detected_image_file_path, save_img)
     return tags, detected_image_file_name
 
 

@@ -9,4 +9,9 @@
     "python.linting.flake8Args": [
         "--max-line-length=88",
     ],
+    "python.testing.pytestArgs": [
+        "tests/detector"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
 }
