@@ -176,9 +176,9 @@ def exec_detect(target_image_path):
             c1 = (int(box[0]), int(box[1]))
             c2 = (int(box[2]), int(box[3]))
             # 画像に枠線を追記
-            cv2 = draw_lines(c1, c2, result_image, line, color)
+            draw_lines(c1, c2, result_image, line, color)
             # 画像にテキストラベルを追記
-            cv2 = draw_texts(result_image, line, c1, color, labels, label)
+            draw_texts(result_image, line, c1, color, labels, label)
             tags.append(labels[label])
 
     # 検知後の画像ファイル名を生成する
@@ -189,7 +189,8 @@ def exec_detect(target_image_path):
         Path(current_app.config["UPLOAD_FOLDER"], detected_image_file_name)
     )
     # 変換後の画像ファイルを保存先へコピーする
-    cv2.imwrite(detected_image_file_path, cv2.cvtColor(result_image, cv2.COLOR_RGB2BGR))
+    save_img = cv2.cvtColor(result_image, cv2.COLOR_RGB2BGR)
+    cv2.imwrite(detected_image_file_path, save_img)
     return tags, detected_image_file_name
 
 
