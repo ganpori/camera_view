@@ -52,7 +52,7 @@
     <section class="container">
         <div>
             <p>文字を書いてみる</p>
-            <img src="images/camera_images/sample.png" title="images/camera_images/sample.png">
+            <img src="{{ url_for('detector.image_file', filename='camera_images/sample.png') }}" alt="アップロード画像" />
         </div>
         {% block content %}{% endblock %}
     </section>
