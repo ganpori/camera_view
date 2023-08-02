@@ -50,6 +50,12 @@
 
     <!-- block contentをsection class="container"で囲む -->
     <section class="container">
+        <div>
+            <p>文字を書いてみる</p>
+            {% for path_camera_image in list_path_camera_image %}
+            <img src="{{ url_for('detector.image_file', filename='camera_images/'+path_camera_image.name) }}" />
+            {% endfor %}
+        </div>
         {% block content %}{% endblock %}
     </section>
 </body>
