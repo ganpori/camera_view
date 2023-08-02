@@ -58,6 +58,9 @@ def index():
     # DeleteFormをインスタンス化する
     delete_form = DeleteForm()
 
+    list_path_camera_image = [
+        p for p in Path(current_app.config["UPLOAD_FOLDER"]+"/camera_images").glob("*.png")
+    ]
     return render_template(
         "detector/index.html",
         user_images=user_images,
@@ -67,6 +70,7 @@ def index():
         detector_form=detector_form,
         # 画像削除フォームをテンプレートに渡す
         delete_form=delete_form,
+        list_path_camera_image=list_path_camera_image
     )
 
 
