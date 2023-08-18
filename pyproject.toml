@@ -45,6 +45,7 @@ wtforms = "3.0.0"
 opencv-python = "^4.7.0.72"
 torch = {version = "^2.0.1+cpu", source = "torch-cpu"}
 torchvision = {version = "^0.15.2+cpu", source = "torch-cpu"}
+gunicorn = "^21.2.0"
 
 
 [[tool.poetry.source]]

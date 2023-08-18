@@ -42,7 +42,6 @@ def create_app(config_key):
 
     # register_blueprintを使いviewsのauthをアプリへ登録する
     app.register_blueprint(auth_views.auth, url_prefix="/auth")
-
     # これから作成するdetectorパッケージからviewsをimportする
     from apps.detector import views as dt_views
 
@@ -50,10 +49,25 @@ def create_app(config_key):
     app.register_blueprint(dt_views.dt)
 
     # カスタムエラー画面を登録する
-    app.register_error_handler(404, page_not_found)
-    app.register_error_handler(500, internal_server_error)
+    # app.register_error_handler(404, page_not_found)
+    # app.register_error_handler(500, internal_server_error)
 
     return app
+
+
+def app_gunicorn(env, start_response):
+    # https://hogetech.info/network/web/gunicorn
+
+    status = " 200 OK"
+    response_headers = [("Content-type", "text/plain;charset=utf-8")]
+    start_response(status, response_headers)
+    if env.get("PATH_INFO") == "/":  # "/" パス
+        return [b"Hello World\n"]  # バイト列を返す
+    if env.get("PATH_INFO") == "/other":  # "/other" パス
+        return [b"Other World\n"]  # バイト列を返す
+
+
+app_for_gunicorn = create_app(config_key="local")
 
 
 # 登録したエンドポイント名の関数を作成し、404や500が発生した際に指定したHTMLを返す
