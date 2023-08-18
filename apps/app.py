@@ -49,8 +49,8 @@ def create_app(config_key):
     app.register_blueprint(dt_views.dt)
 
     # カスタムエラー画面を登録する
-    app.register_error_handler(404, page_not_found)
-    app.register_error_handler(500, internal_server_error)
+    # app.register_error_handler(404, page_not_found)
+    # app.register_error_handler(500, internal_server_error)
 
     return app
 
@@ -67,6 +67,9 @@ def app_gunicorn(env, start_response):
         return [b"Other World\n"]  # バイト列を返す
 
 
+app_for_gunicorn = create_app(config_key="local")
+
+
 # 登録したエンドポイント名の関数を作成し、404や500が発生した際に指定したHTMLを返す
 def page_not_found(e):
     """404 Not Found"""
@@ -76,6 +79,3 @@ def page_not_found(e):
 def internal_server_error(e):
     """500 Internal Server Error"""
     return render_template("500.html"), 500
-
-
-# https://hogetech.info/network/web/gunicorn
