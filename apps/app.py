@@ -67,7 +67,15 @@ def app_gunicorn(env, start_response):
         return [b"Other World\n"]  # バイト列を返す
 
 
+# このオブジェクトをgunicorn apps.app:app_for_gunicorn として実行する
 app_for_gunicorn = create_app(config_key="local")
+
+# nginxの説明ページ。https://snowtree-injune.com/2020/10/30/nginx-static-dj014/
+# You should look at the following URL's in order to grasp a solid understanding
+# of Nginx configuration files in order to fully unleash the power of Nginx.
+# https://www.nginx.com/resources/wiki/start/
+# https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
+# https://wiki.debian.org/Nginx/DirectoryStructure
 
 
 # 登録したエンドポイント名の関数を作成し、404や500が発生した際に指定したHTMLを返す
