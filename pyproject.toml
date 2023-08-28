@@ -5,7 +5,10 @@ description = ""
 authors = ["TaikiIwahori <hmyrwjj@yahoo.co.jp>"]
 license = "MIT"
 readme = "README.md"
-packages = [{ include = "camera_view" }]
+packages = [{ include = "apps" }]
+# packages = [{ include = "camera_view" }]
+# もともとはこうだった。poetryのインストールでエラー出ないようにした
+
 
 [tool.poetry.dependencies]
 python = "^3.11"
