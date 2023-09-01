@@ -1,6 +1,7 @@
 import random
 import uuid
 from pathlib import Path
+import shutil
 
 import cv2
 import numpy as np
@@ -59,8 +60,17 @@ def index():
     delete_form = DeleteForm()
 
     list_path_camera_image = [
-        p for p in Path(current_app.config["UPLOAD_FOLDER"]+"/camera_images").glob("*.png")
+        p
+        for p in Path(current_app.config["UPLOAD_FOLDER"] + "/camera_images").glob(
+            "*.png"
+        )
     ]
+    list_tmp_jpg = [p for p in Path("/tmp").glob("*.jpg")][-10:]
+    for i, p in enumerate(list_tmp_jpg):
+        path_img = Path(current_app.config["UPLOAD_FOLDER"] + "/camera_images") / p.name
+        shutil.copy2(src=p, dst=path_img)
+        list_tmp_jpg[i] = path_img
+
     return render_template(
         "detector/index.html",
         user_images=user_images,
@@ -70,7 +80,8 @@ def index():
         detector_form=detector_form,
         # 画像削除フォームをテンプレートに渡す
         delete_form=delete_form,
-        list_path_camera_image=list_path_camera_image
+        list_path_camera_image=list_path_camera_image,
+        list_tmp_jpg=list_tmp_jpg,
     )
 
 
