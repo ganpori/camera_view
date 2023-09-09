@@ -76,7 +76,7 @@ def index():
     for i, p in enumerate(list_tmp_jpg_latest):
         path_img = path_camera_images_dir / p.name
         os.symlink(src=p, dst=path_img)
-        list_tmp_jpg[i] = path_img
+        list_tmp_jpg_latest[i] = path_img
 
     return render_template(
         "detector/index.html",
@@ -87,7 +87,7 @@ def index():
         detector_form=detector_form,
         # 画像削除フォームをテンプレートに渡す
         delete_form=delete_form,
-        list_tmp_jpg=list_tmp_jpg,
+        list_tmp_jpg_latest=list_tmp_jpg_latest,
     )
 
 
