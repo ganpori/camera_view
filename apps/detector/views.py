@@ -70,8 +70,10 @@ def index():
         # https://msiz07-flask-docs-ja.readthedocs.io/ja/latest/reqcontext.html
 
     # 表示する画像を/tmpディレクトリからシンボリックリンクでとってくる。
-    list_tmp_jpg = [p for p in Path("/tmp").glob("*.jpg")][-10:]
-    for i, p in enumerate(list_tmp_jpg):
+    list_tmp_jpg = [p for p in Path("/tmp").glob("*.jpg")]  # まず一覧を取得
+    list_tmp_jpg.sort()  # sortする
+    list_tmp_jpg_latest = list_tmp_jpg[-10:]  # 最新の十枚だけ取得
+    for i, p in enumerate(list_tmp_jpg_latest):
         path_img = path_camera_images_dir / p.name
         os.symlink(src=p, dst=path_img)
         list_tmp_jpg[i] = path_img
