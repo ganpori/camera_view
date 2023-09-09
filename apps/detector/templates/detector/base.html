@@ -57,7 +57,7 @@
 
             {% for p in list_tmp_jpg %}
             <p>ファイル名:{{ p.name }}</p>
-            <img src="{{ url_for('detector.image_file', filename='camera_images/'+p.name) }}">
+            <img src="{{ url_for('detector.image_file', filename='camera_images/'+p.name) }}" width="640" height="360">
             {% endfor %}
         </div>
         {% block content %}{% endblock %}
