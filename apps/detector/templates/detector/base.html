@@ -56,7 +56,7 @@
             https://tanuhack.com/jinja2-block/ -->
 
             {% for p in list_tmp_jpg %}
-            <p>画像のパス{{ p }}</p>
+            <p>ファイル名:{{ p.name }}</p>
             <img src="{{ url_for('detector.image_file', filename='camera_images/'+p.name) }}">
             {% endfor %}
         </div>
