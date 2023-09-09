@@ -59,9 +59,20 @@ def index():
     # DeleteFormをインスタンス化する
     delete_form = DeleteForm()
 
+    path_camera_images_dir = Path(
+        current_app.config["UPLOAD_FOLDER"] + "/camera_images"
+    )
+    # これまで表示していた画像を削除
+    for path_old_jpg in path_camera_images_dir.glob("*.jpg"):
+        path_old_jpg.unlink()
+        # teardownとかで後処理したほうが良い
+        # https://qiita.com/umezawatakeshi/items/188d07d2e005a3cf885f
+        # https://msiz07-flask-docs-ja.readthedocs.io/ja/latest/reqcontext.html
+
+    # 表示する画像を/tmpディレクトリからシンボリックリンクでとってくる。
     list_tmp_jpg = [p for p in Path("/tmp").glob("*.jpg")][-10:]
     for i, p in enumerate(list_tmp_jpg):
-        path_img = Path(current_app.config["UPLOAD_FOLDER"] + "/camera_images") / p.name
+        path_img = path_camera_images_dir / p.name
         os.symlink(src=p, dst=path_img)
         list_tmp_jpg[i] = path_img
 
