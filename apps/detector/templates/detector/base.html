@@ -51,9 +51,13 @@
     <!-- block contentをsection class="container"で囲む -->
     <section class="container">
         <div>
-            <p>文字を書いてみる</p>
-            {% for path_camera_image in list_path_camera_image %}
-            <img src="{{ url_for('detector.image_file', filename='camera_images/'+path_camera_image.name) }}" />
+            <p>jpgの枚数: {{ list_tmp_jpg_latest|length }}枚</p>
+            <!-- jinja2のフィルターの書き方
+            https://tanuhack.com/jinja2-block/ -->
+
+            {% for p in list_tmp_jpg_latest %}
+            <p>ファイル名:{{ p.name }}</p>
+            <img src="{{ url_for('detector.image_file', filename='camera_images/'+p.name) }}" width="640" height="360">
             {% endfor %}
         </div>
         {% block content %}{% endblock %}
