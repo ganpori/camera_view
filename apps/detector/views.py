@@ -1,7 +1,7 @@
 import random
 import uuid
+import os
 from pathlib import Path
-import shutil
 
 import cv2
 import numpy as np
@@ -62,7 +62,7 @@ def index():
     list_tmp_jpg = [p for p in Path("/tmp").glob("*.jpg")][-10:]
     for i, p in enumerate(list_tmp_jpg):
         path_img = Path(current_app.config["UPLOAD_FOLDER"] + "/camera_images") / p.name
-        shutil.copy2(src=p, dst=path_img)
+        os.symlink(src=p, dst=path_img)
         list_tmp_jpg[i] = path_img
 
     return render_template(
