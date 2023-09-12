@@ -77,6 +77,9 @@ def index():
         path_img = path_camera_images_dir / p.name
         os.symlink(src=p, dst=path_img)
         list_tmp_jpg_latest[i] = path_img
+    list_tmp_jpg_latest = _create_jpg_symlink_and_get_path(
+        path_save_symlink_dir=path_camera_images_dir
+    )
 
     return render_template(
         "detector/index.html",
@@ -89,6 +92,18 @@ def index():
         delete_form=delete_form,
         list_tmp_jpg_latest=list_tmp_jpg_latest,
     )
+
+
+def _create_jpg_symlink_and_get_path(path_save_symlink_dir):
+    # 表示する画像を/tmpディレクトリからシンボリックリンクでとってくる。
+    list_tmp_jpg = [p for p in Path("/tmp/camera_images").glob("*.jpg")]  # まず一覧を取得
+    list_tmp_jpg.sort()  # sortする
+    list_tmp_jpg_latest = list_tmp_jpg[-10:]  # 最新の十枚だけ取得
+    for i, p in enumerate(list_tmp_jpg_latest):
+        path_img = path_save_symlink_dir / p.name
+        os.symlink(src=p, dst=path_img)
+        list_tmp_jpg_latest[i] = path_img
+    return list_tmp_jpg_latest
 
 
 @dt.route("/images/<path:filename>")
