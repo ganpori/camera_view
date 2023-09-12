@@ -68,15 +68,13 @@ def index():
         # teardownとかで後処理したほうが良い
         # https://qiita.com/umezawatakeshi/items/188d07d2e005a3cf885f
         # https://msiz07-flask-docs-ja.readthedocs.io/ja/latest/reqcontext.html
-
-    # 表示する画像を/tmpディレクトリからシンボリックリンクでとってくる。
-    list_tmp_jpg = [p for p in Path("/tmp").glob("*.jpg")]  # まず一覧を取得
-    list_tmp_jpg.sort()  # sortする
-    list_tmp_jpg_latest = list_tmp_jpg[-10:]  # 最新の十枚だけ取得
-    for i, p in enumerate(list_tmp_jpg_latest):
-        path_img = path_camera_images_dir / p.name
-        os.symlink(src=p, dst=path_img)
-        list_tmp_jpg_latest[i] = path_img
+    list_tmp_jpg_auto = _create_jpg_symlink_and_get_path(
+        path_save_symlink_dir=path_camera_images_dir, target_pattern="*_auto.jpg"
+    )
+    list_tmp_jpg_long_exposure = _create_jpg_symlink_and_get_path(
+        path_save_symlink_dir=path_camera_images_dir,
+        target_pattern="*_long_exposure.jpg",
+    )
 
     return render_template(
         "detector/index.html",
@@ -87,8 +85,23 @@ def index():
         detector_form=detector_form,
         # 画像削除フォームをテンプレートに渡す
         delete_form=delete_form,
-        list_tmp_jpg_latest=list_tmp_jpg_latest,
+        list_tmp_jpg_auto=list_tmp_jpg_auto,
+        list_tmp_jpg_long_exposure=list_tmp_jpg_long_exposure,
     )
+
+
+def _create_jpg_symlink_and_get_path(path_save_symlink_dir, target_pattern):
+    # 表示する画像を/tmpディレクトリからシンボリックリンクでとってくる。
+    list_tmp_jpg = [
+        p for p in Path("/tmp/camera_images").glob(pattern=target_pattern)
+    ]  # まず一覧を取得
+    list_tmp_jpg.sort()  # sortする
+    list_tmp_jpg_latest = list_tmp_jpg[-10:]  # 最新の十枚だけ取得
+    for i, p in enumerate(list_tmp_jpg_latest):
+        path_img = path_save_symlink_dir / p.name
+        os.symlink(src=p, dst=path_img)
+        list_tmp_jpg_latest[i] = path_img
+    return list_tmp_jpg_latest
 
 
 @dt.route("/images/<path:filename>")
