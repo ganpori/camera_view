@@ -78,7 +78,7 @@ def index():
         os.symlink(src=p, dst=path_img)
         list_tmp_jpg_latest[i] = path_img
     list_tmp_jpg_latest = _create_jpg_symlink_and_get_path(
-        path_save_symlink_dir=path_camera_images_dir
+        path_save_symlink_dir=path_camera_images_dir, target_pattern="*_auto.jpg"
     )
 
     return render_template(
@@ -94,9 +94,11 @@ def index():
     )
 
 
-def _create_jpg_symlink_and_get_path(path_save_symlink_dir):
+def _create_jpg_symlink_and_get_path(path_save_symlink_dir, target_pattern):
     # 表示する画像を/tmpディレクトリからシンボリックリンクでとってくる。
-    list_tmp_jpg = [p for p in Path("/tmp/camera_images").glob("*.jpg")]  # まず一覧を取得
+    list_tmp_jpg = [
+        p for p in Path("/tmp/camera_images").glob(pattern=target_pattern)
+    ]  # まず一覧を取得
     list_tmp_jpg.sort()  # sortする
     list_tmp_jpg_latest = list_tmp_jpg[-10:]  # 最新の十枚だけ取得
     for i, p in enumerate(list_tmp_jpg_latest):
