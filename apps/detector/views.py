@@ -85,7 +85,8 @@ def index():
         detector_form=detector_form,
         # 画像削除フォームをテンプレートに渡す
         delete_form=delete_form,
-        list_tmp_jpg_latest=list_tmp_jpg_auto,
+        list_tmp_jpg_auto=list_tmp_jpg_auto,
+        list_tmp_jpg_long_exposure=list_tmp_jpg_long_exposure,
     )
 
 
