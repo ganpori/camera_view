@@ -57,12 +57,14 @@
 
             {% for p in list_tmp_jpg_auto %}
             <p>ファイル名:{{ p.name }}</p>
-            <img src="{{ url_for('detector.image_file', filename='camera_images/'+p.name) }}" width="640" height="360">
+            <img src="{{ url_for('detector.image_file', filename='camera_images/'+p.name) }}" width="640" height="360"
+                loading="lazy">
             {% endfor %}
 
             {% for p in list_tmp_jpg_long_exposure %}
             <p>ファイル名:{{ p.name }}</p>
-            <img src="{{ url_for('detector.image_file', filename='camera_images/'+p.name) }}" width="640" height="360">
+            <img src="{{ url_for('detector.image_file', filename='camera_images/'+p.name) }}" width="640" height="360"
+                loading="lazy">
             {% endfor %}
 
         </div>
