@@ -13,7 +13,7 @@ packages = [{ include = "apps" }]
 [tool.poetry.dependencies]
 python = "^3.11"
 alembic = "1.7.5"
-attrs = "21.2.0"
+attrs = "^23.2.0"
 black = "^23.3.0"
 coverage = "6.2"
 dnspython = "2.1.0"
@@ -62,6 +62,7 @@ gunicorn = "^21.2.0"
 # https://github.com/python-poetry/poetry/issues/5205
 # https://zenn.dev/hrsma2i/articles/poetry-extras
 # https://stackoverflow.com/questions/61052866/python-poetry-how-to-specify-platform-specific-dependency-alternatives
+jsonschema = "^4.20.0"
 [[tool.poetry.source]]
 name = "torch-cpu"
 url = "https://download.pytorch.org/whl/cpu"
