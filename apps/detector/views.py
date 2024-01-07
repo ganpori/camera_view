@@ -62,6 +62,7 @@ def index():
     path_camera_images_dir = Path(
         current_app.config["UPLOAD_FOLDER"] + "/camera_images"
     )
+    path_camera_images_dir.mkdir(exist_ok=True, parents=True)
     # これまで表示していた画像を削除
     for path_old_jpg in path_camera_images_dir.glob("*.jpg"):
         path_old_jpg.unlink()
